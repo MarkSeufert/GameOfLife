@@ -229,10 +229,11 @@ void GameBoard::ResetBoard()
 
 void GameBoard::LoadPreconfiguration(int pConfig)
 {
+	//Clear the board before we load the new config
+	ResetBoard();
+
 	if(pConfig == 1) //Glider
 	{
-		ResetBoard(); 
-
 		SetBoardPosition(40, 25, true);
 		SetBoardPosition(41, 25, true);
 		SetBoardPosition(42, 25, true);
@@ -241,8 +242,6 @@ void GameBoard::LoadPreconfiguration(int pConfig)
 	}
 	else if (pConfig == 2) //Horizontal Glider
 	{
-		ResetBoard();
-
 		SetBoardPosition(40, 25, true);
 		SetBoardPosition(40, 26, true);
 		SetBoardPosition(40, 27, true);
@@ -255,8 +254,6 @@ void GameBoard::LoadPreconfiguration(int pConfig)
 	}
 	else if (pConfig == 3) //Big Horizonal Glider
 	{
-		ResetBoard();
-
 		SetBoardPosition(40, 25, true);
 		SetBoardPosition(40, 26, true);
 		SetBoardPosition(40, 27, true);
@@ -287,5 +284,147 @@ void GameBoard::LoadPreconfiguration(int pConfig)
 		SetBoardPosition(48, 22, true);
 		SetBoardPosition(49, 23, true);
 		SetBoardPosition(50, 23, true);
+	}
+	else if (pConfig == 4) //Glider gun
+	{
+		SetBoardPosition(20, 25, true);
+		SetBoardPosition(20, 26, true);
+		SetBoardPosition(21, 25, true);
+		SetBoardPosition(21, 26, true);
+
+		SetBoardPosition(30, 24, true);
+		SetBoardPosition(30, 25, true);
+		SetBoardPosition(30, 26, true);
+		SetBoardPosition(31, 23, true);
+		SetBoardPosition(31, 27, true);
+		SetBoardPosition(32, 28, true);
+		SetBoardPosition(33, 28, true);
+		SetBoardPosition(32, 22, true);
+		SetBoardPosition(33, 22, true);
+
+		SetBoardPosition(34, 25, true);
+		SetBoardPosition(35, 23, true);
+		SetBoardPosition(35, 27, true);
+		SetBoardPosition(36, 26, true);
+		SetBoardPosition(36, 25, true);
+		SetBoardPosition(36, 24, true);
+		SetBoardPosition(37, 25, true);
+	
+		SetBoardPosition(40, 26, true);
+		SetBoardPosition(40, 27, true);
+		SetBoardPosition(40, 28, true);
+		SetBoardPosition(41, 26, true);
+		SetBoardPosition(41, 27, true);
+		SetBoardPosition(41, 28, true);
+		SetBoardPosition(42, 29, true);
+		SetBoardPosition(42, 25, true);
+
+		SetBoardPosition(44, 25, true);
+		SetBoardPosition(44, 24, true);
+		SetBoardPosition(44, 29, true);
+		SetBoardPosition(44, 30, true);
+
+		SetBoardPosition(54, 28, true);
+		SetBoardPosition(54, 27, true);
+		SetBoardPosition(55, 28, true);
+		SetBoardPosition(55, 27, true);
+	}
+	else if (pConfig == 5) //Oscillators
+	{
+		//Oscillator 1
+		{
+			SetBoardPosition(15, 18, true);
+			SetBoardPosition(15, 19, true);
+			SetBoardPosition(15, 20, true);
+			SetBoardPosition(15, 21, true);
+			SetBoardPosition(15, 22, true);
+			SetBoardPosition(15, 23, true);
+			SetBoardPosition(16, 18, true);
+			SetBoardPosition(16, 19, true);
+			SetBoardPosition(16, 20, true);
+			SetBoardPosition(16, 21, true);
+			SetBoardPosition(16, 22, true);
+			SetBoardPosition(16, 23, true);
+
+			SetBoardPosition(15, 25, true);
+			SetBoardPosition(16, 25, true);
+			SetBoardPosition(17, 25, true);
+			SetBoardPosition(18, 25, true);
+			SetBoardPosition(19, 25, true);
+			SetBoardPosition(20, 25, true);
+			SetBoardPosition(15, 26, true);
+			SetBoardPosition(16, 26, true);
+			SetBoardPosition(17, 26, true);
+			SetBoardPosition(18, 26, true);
+			SetBoardPosition(19, 26, true);
+			SetBoardPosition(20, 26, true);
+
+			SetBoardPosition(18, 18, true);
+			SetBoardPosition(19, 18, true);
+			SetBoardPosition(20, 18, true);
+			SetBoardPosition(21, 18, true);
+			SetBoardPosition(22, 18, true);
+			SetBoardPosition(23, 18, true);
+			SetBoardPosition(18, 19, true);
+			SetBoardPosition(19, 19, true);
+			SetBoardPosition(20, 19, true);
+			SetBoardPosition(21, 19, true);
+			SetBoardPosition(22, 19, true);
+			SetBoardPosition(23, 19, true);
+
+			SetBoardPosition(22, 26, true);
+			SetBoardPosition(22, 25, true);
+			SetBoardPosition(22, 24, true);
+			SetBoardPosition(22, 23, true);
+			SetBoardPosition(22, 22, true);
+			SetBoardPosition(22, 21, true);
+			SetBoardPosition(23, 26, true);
+			SetBoardPosition(23, 25, true);
+			SetBoardPosition(23, 24, true);
+			SetBoardPosition(23, 23, true);
+			SetBoardPosition(23, 22, true);
+			SetBoardPosition(23, 21, true);
+		}
+
+		//Oscillator 2
+		{
+			SetBoardPosition(38, 23, true);
+			SetBoardPosition(38, 22, true);
+			SetBoardPosition(38, 21, true);
+			SetBoardPosition(38, 20, true);
+			SetBoardPosition(38, 19, true);
+
+			SetBoardPosition(40, 23, true);
+			SetBoardPosition(40, 22, true);
+			SetBoardPosition(40, 21, true);
+			SetBoardPosition(40, 20, true);
+			SetBoardPosition(40, 19, true);
+
+			SetBoardPosition(39, 19, true);
+			SetBoardPosition(39, 23, true);
+		}
+
+		//Oscillator 3
+		{
+			SetBoardPosition(55, 23, true);
+			SetBoardPosition(55, 24, true);
+			SetBoardPosition(55, 25, true);
+			SetBoardPosition(56, 23, true);
+			SetBoardPosition(56, 24, true);
+			SetBoardPosition(56, 25, true);
+			SetBoardPosition(57, 23, true);
+			SetBoardPosition(57, 24, true);
+			SetBoardPosition(57, 25, true);
+
+			SetBoardPosition(58, 20, true);
+			SetBoardPosition(58, 21, true);
+			SetBoardPosition(58, 22, true);
+			SetBoardPosition(59, 20, true);
+			SetBoardPosition(59, 21, true);
+			SetBoardPosition(59, 22, true);
+			SetBoardPosition(60, 20, true);
+			SetBoardPosition(60, 21, true);
+			SetBoardPosition(60, 22, true);
+		}
 	}
 }

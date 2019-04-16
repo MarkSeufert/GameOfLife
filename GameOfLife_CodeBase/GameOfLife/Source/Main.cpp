@@ -5,7 +5,7 @@
 #define _SCREEN_WIDTH 1600
 #define _SCREEN_HEIGHT 900
 #define _CELL_SIZE 20
-#define _SCROLL_SPEED 0.1
+#define _INITIAL_FRAMESPEED 0.1
 
 //Global variables
 GameBoard board(_SCREEN_WIDTH, _SCREEN_HEIGHT, _CELL_SIZE);
@@ -13,7 +13,7 @@ bool leftClickDown = false;
 bool rightClickDown = false;
 bool paused = false;
 bool hasQuit = false; //Set to true when the player presses 'q' or 'esc'
-float frameSpeed = 0.1f;
+float frameSpeed = _INITIAL_FRAMESPEED;
 
 //If the left or right click has been pressed
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -49,11 +49,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	//'+' key increases the board speed
 	if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+	{
 		frameSpeed /= 2;
+		if(frameSpeed < _INITIAL_FRAMESPEED / 16)
+			frameSpeed = _INITIAL_FRAMESPEED / 16;
+	}
 
 	//'-' key increases the board speed
 	if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+	{
 		frameSpeed *= 2;
+		if (frameSpeed > _INITIAL_FRAMESPEED * 4)
+			frameSpeed = _INITIAL_FRAMESPEED * 4;
+	}
 
 	//'esc' or 'q' key closes the program
 	if ((key == GLFW_KEY_ESCAPE || key == GLFW_KEY_Q) && action == GLFW_PRESS) 
@@ -69,6 +77,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		board.LoadPreconfiguration(2);
 	if (key == GLFW_KEY_3 && action == GLFW_PRESS)
 		board.LoadPreconfiguration(3);
+	if (key == GLFW_KEY_4 && action == GLFW_PRESS)
+		board.LoadPreconfiguration(4);
+	if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+		board.LoadPreconfiguration(5);
 }
 
 int main(void)
@@ -98,11 +110,7 @@ int main(void)
 	double xpos, ypos; //The x and y of the mouse
 
 	//Give the board an initial pattern
-	board.SetBoardPosition(20, 20, true);
-	board.SetBoardPosition(21, 20, true);
-	board.SetBoardPosition(22, 20, true);
-	board.SetBoardPosition(22, 21, true);
-	board.SetBoardPosition(21, 22, true);
+	board.LoadPreconfiguration(2);
 
 	//Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
