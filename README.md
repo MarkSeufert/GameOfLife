@@ -8,3 +8,5 @@ How to use the application:
 - Press 'r' to reset the board
 - Press '+' and '-' to increase/decrease the time between iterations
 - Press keys 1 to 5 to load a premade sequence
+
+![Capture](https://user-images.githubusercontent.com/22309117/56176535-6dfeef80-5fc9-11e9-9cbf-351237e68aef.PNG)
