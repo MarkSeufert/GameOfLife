@@ -1,4 +1,4 @@
-# GameOfLife
+# Game Of Life
 A simple implimentation of Conway's Game of Life using the GLFW library for OpenGL in c++. Contains the visual studio project with all the neccessary libraries included, and an executable file for windows.
 
 ### How to use the application:
