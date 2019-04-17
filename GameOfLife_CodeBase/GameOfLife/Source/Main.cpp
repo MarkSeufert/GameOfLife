@@ -2,13 +2,15 @@
 #include "GameBoard.h"
 
 //Constants
-#define _SCREEN_WIDTH 1600
-#define _SCREEN_HEIGHT 900
+#define _SCREEN_WIDTH_MAX 1600
+#define _SCREEN_HEIGHT_MAX 900
+#define _SCREEN_WIDTH_MIN 1050
+#define _SCREEN_HEIGHT_MIN 500
 #define _CELL_SIZE 20
 #define _INITIAL_FRAMESPEED 0.1
 
 //Global variables
-GameBoard board(_SCREEN_WIDTH, _SCREEN_HEIGHT, _CELL_SIZE);
+GameBoard board(_SCREEN_WIDTH_MAX, _SCREEN_HEIGHT_MAX, _CELL_SIZE);
 bool leftClickDown = false;
 bool rightClickDown = false;
 bool paused = false;
@@ -91,13 +93,16 @@ int main(void)
 		return -1;
 
 	//Create the window
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	window = glfwCreateWindow(_SCREEN_WIDTH, _SCREEN_HEIGHT, "Game of Life", NULL, NULL);
+	//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	window = glfwCreateWindow(_SCREEN_WIDTH_MAX, _SCREEN_HEIGHT_MAX, "Game of Life", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
 		return -1;
 	}
+
+	//Set the min and max sizes for the window
+	glfwSetWindowSizeLimits(window, _SCREEN_WIDTH_MIN, _SCREEN_HEIGHT_MIN, _SCREEN_WIDTH_MAX, _SCREEN_HEIGHT_MAX);
 
 	//Make the new window appear in front of all other windows
 	glfwMakeContextCurrent(window);
@@ -108,6 +113,7 @@ int main(void)
 
 	//-----------------Initialize Game of Life varianbles--------------------//
 	double xpos, ypos; //The x and y of the mouse
+	int width = _SCREEN_WIDTH_MAX, height = _SCREEN_HEIGHT_MAX; //The current width and height of the window
 
 	//Give the board an initial pattern
 	board.LoadPreconfiguration(2);
@@ -142,6 +148,18 @@ int main(void)
 		//Calculate the next frame if a certain amount of time has elapsed
 		if (glfwGetTime() > frameSpeed && !paused)
 		{
+			//Check if the window has been resized
+			int newWidth, newHeight;
+			glfwGetFramebufferSize(window, &newWidth, &newHeight);
+			
+			if (newWidth != width || newHeight != height) 
+			{
+				board.ChangedWindowSize(newWidth, newHeight);
+
+				width = newWidth;
+				height = newHeight;
+			}
+
 			board.CalculateNextFrame();
 			glfwSetTime(0);
 		}

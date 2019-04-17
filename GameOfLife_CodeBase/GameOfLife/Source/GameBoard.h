@@ -18,6 +18,7 @@ private:
 public:
 	GameBoard(int, int, int); ///The constructor which takes the screenwidth, screenheight, and cellSize
 	void CalculateNextFrame(); ///Calculates the next frame given the current frame
+	void ChangedWindowSize(int, int); ///Changes the size of the gameboard to fit to the new resolution
 	void SetBoardPosition(int, int, bool); ///Sets the board value at a given index
 	void DrawGrid(); ///Draws a grid onto the window depending on the boards width and height
 	void DrawBoard(); ///Draws the cells of the board onto the main screen
