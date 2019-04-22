@@ -67,6 +67,9 @@ GameBoard::GameBoard(int pScreenWidth, int pScreenHeight, int pCellSize)
 			mBoard2[col][row] = false;
 		}
 	}
+
+	//Set the viewport
+	glViewport(0, 0, mScreenWidth, mScreenHeight);
 }
 
 void GameBoard::CalculateNextFrame()
@@ -110,6 +113,9 @@ void GameBoard::ChangedWindowSize(int pNewWidth, int pNewHeight)
 	//Calculate the number of cells wide and tall the board is
 	mBoardColumns = mScreenWidth / mCellSize;
 	mBoardRows = mScreenHeight / mCellSize;
+
+	//Set the viewport
+	glViewport(0, 0, mScreenWidth, mScreenHeight);
 }
 
 void GameBoard::SetBoardPosition(int pCol, int pRow, bool pToggle)
@@ -121,9 +127,9 @@ void GameBoard::SetBoardPosition(int pCol, int pRow, bool pToggle)
 void GameBoard::DrawGrid() 
 {
 	//Initialize openGl for drawing lines
-	glOrtho(0, mScreenWidth, 0, mScreenHeight, 0, 1);
 	glLoadIdentity();
-	glLineWidth(1); //Set the width of the line to 1
+	glOrtho(0, mBoardColumns, 0, mBoardRows, 0, 1);
+	glLineWidth(0.1); //Set the width of the line to 1
 	glColor3f(0.8f, 0.8f, 0.8f); //Set the color of the line to grey
 	glBegin(GL_LINES);
 
@@ -131,16 +137,16 @@ void GameBoard::DrawGrid()
 	for (int col = 0; col <= mBoardColumns; col++) 
 	{
 		float xPos = ((float)col / (float)mBoardColumns) * 2 - 1;
-		glVertex2f(xPos, -1);
-		glVertex2f(xPos, 1);
+		glVertex2f(col, 0);
+		glVertex2f(col, mScreenHeight);
 	}
 
 	//Draw the horizontal lines
 	for (int row = 0; row <= mBoardRows; row++)
 	{
 		float yPos = ((float)row / (float)mBoardRows) * 2 - 1;
-		glVertex2f(-1, yPos);
-		glVertex2f(1, yPos);
+		glVertex2f(0, row);
+		glVertex2f(mScreenWidth, row);
 	}
 	glEnd();
 }
@@ -148,12 +154,10 @@ void GameBoard::DrawGrid()
 void GameBoard::DrawBoard()
 {
 	//Initialize openGl for drawing quads
-	glViewport(0, 0, mScreenWidth, mScreenHeight);
+	glLoadIdentity();
+	glOrtho(0, mBoardColumns, 0, mBoardRows, 0, 1);
 	glColor3f(0.2f, 0.2f, 0.2f);
 	glBegin(GL_QUADS);
-
-	double xSize = (float)1 / (float)mBoardColumns * 2; //The width of 1 cell
-	double ySize = (float)1 / (float)mBoardRows * 2; //The height of 1 cell
 
 	//Iterate through all the cells on the board
 	for (int col = 0; col < mBoardColumns; col++) 
@@ -162,12 +166,10 @@ void GameBoard::DrawBoard()
 		{
 			if (mBoard[col][row]) //If this cell is enabled
 			{
-				double xPos = ((float)col / (float)mBoardColumns) * 2 - 1;
-				double yPos = ((float)row / (float)mBoardRows) * 2 - 1;
-				glVertex2f(xPos, yPos);
-				glVertex2f(xPos + xSize, yPos);
-				glVertex2f(xPos + xSize, yPos + ySize);
-				glVertex2f(xPos    , yPos + ySize);
+				glVertex2f(col, row);
+				glVertex2f(col + 1, row);
+				glVertex2f(col + 1, row + 1);
+				glVertex2f(col, row + 1);
 			}
 		}
 	}
@@ -181,34 +183,28 @@ void GameBoard::DrawMouseHover(double pMouseX, double pMouseY)
 	xIndex = (int)(pMouseX / (double)mScreenWidth * mBoardColumns);
 	yIndex = mBoardRows - (int)(pMouseY / (double)mScreenHeight * mBoardRows) - 1; //Y is inverted
 
-	double xPos = ((float)xIndex / (float)mBoardColumns) * 2 - 1; //The left of the box we want to draw
-	double yPos = ((float)yIndex / (float)mBoardRows) * 2 - 1; //The bottom of the box we want to draw
-
-	double xSize = (float)1 / (float)mBoardColumns * 2; //The width of 1 cell
-	double ySize = (float)1 / (float)mBoardRows * 2; //The height of 1 cell
-
-	 //Initialize openGl for drawing lines
-	glOrtho(0, mScreenWidth, 0, mScreenHeight, 0, 1);
+	//Initialize openGl for drawing lines
 	glLoadIdentity();
+	glOrtho(0, mBoardColumns, 0, mBoardRows, 0, 1);
 	glLineWidth(2); //Set the width of the line to 1
 	glColor3f(0.2f, 0.2f, 0.2f); //Set the color of the line to grey
 	glBegin(GL_LINES);
 
 	//Top of box
-	glVertex2f(xPos, yPos);
-	glVertex2f(xPos + xSize, yPos);
+	glVertex2f(xIndex, yIndex);
+	glVertex2f(xIndex + 1, yIndex);
 
 	//Bottom of box
-	glVertex2f(xPos + xSize, yPos + ySize);
-	glVertex2f(xPos, yPos + ySize);
+	glVertex2f(xIndex + 1, yIndex + 1);
+	glVertex2f(xIndex, yIndex + 1);
 
 	//Left of box
-	glVertex2f(xPos, yPos + ySize);
-	glVertex2f(xPos, yPos);
+	glVertex2f(xIndex, yIndex + 1);
+	glVertex2f(xIndex, yIndex);
 
 	//Right of box
-	glVertex2f(xPos + xSize, yPos + ySize);
-	glVertex2f(xPos + xSize, yPos);
+	glVertex2f(xIndex + 1, yIndex + 1);
+	glVertex2f(xIndex + 1, yIndex);
 
 	glEnd();
 }
